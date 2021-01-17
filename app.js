@@ -69,12 +69,12 @@ function handleUserClick(event){
   } else {
     // handle end of voting
     var resultsList = document.getElementById('results-list');
-    var goatResult;
+    var finalResult;
     for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
-      goatResult = document.createElement('li');
-      goatResult.textContent = ImageMall.prototype.allImages[i].imageName + ' was Clicked  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenShown + ' Times';
-      console.log(goatResult);
-      resultsList.appendChild(goatResult);
+      finalResult = document.createElement('li');
+      finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' was Clicked  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenShown + ' Times';
+      
+      resultsList.appendChild(finalResult);
       
     }
     imageOneElement.removeEventListener('click',handleUserClick);
