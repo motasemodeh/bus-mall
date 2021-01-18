@@ -5,7 +5,7 @@ var imageTwoElement = document.getElementById('image-two');
 var imageThreeElement = document.getElementById('image-three');
 var maxAttempts = 25;
 var userAttemptsCounter = 0;
-var imageAppearence = 0;
+// var imageAppearence = 0;
 
 var imageOneIndex;
 var imageTwoIndex;
@@ -43,11 +43,10 @@ new ImageMall('tauntaun','img/tauntaun.jpg');
 new ImageMall('Unicorn','img/unicorn.jpg');
 new ImageMall('usb','img/usb.gif');
 
-new ImageMall('bubblegum','img/water-can.jpg');
-new ImageMall('chair','img/wine-glass.jpg');
+new ImageMall('Water can','img/water-can.jpg');
+new ImageMall('Wine Glass','img/wine-glass.jpg');
 
 renderThreeRandomImages();
-
 
 imageOneElement.addEventListener('click',handleUserClick);
 imageTwoElement.addEventListener('click',handleUserClick);
@@ -67,24 +66,44 @@ function handleUserClick(event){
     renderThreeRandomImages();
 
   } else {
-    // handle end of voting
-    var resultsList = document.getElementById('results-list');
-    var finalResult;
-    for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
-      finalResult = document.createElement('li');
-      finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' was Clicked  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenShown + ' Times';
-      
-      resultsList.appendChild(finalResult);
-      
-    }
-    imageOneElement.removeEventListener('click',handleUserClick);
-    imageTwoElement.removeEventListener('click',handleUserClick);
-    imageThreeElement.removeEventListener('click',handleUserClick);
-
+    
+    showResult();
+    
   }
 
 }
+var resultsList;
+var finalResult;
+function showResult()
+{
+      // handle end of voting
+      resultsList = document.getElementById('results-list');
+      finalResult;
 
+      
+  for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
+
+    finalResult = document.createElement('li');
+    finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' had  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenShown + ' Votes, and was seen ' +  + ' Times';
+    
+    resultsList.appendChild(finalResult);
+    
+  }
+
+      imageOneElement.removeEventListener('click',handleUserClick);
+      imageTwoElement.removeEventListener('click',handleUserClick);
+      imageThreeElement.removeEventListener('click',handleUserClick);
+  
+}
+
+
+function showResultButton()
+{
+  
+  var btn = document.createElement("BUTTON"); 
+  btn.id ='myBtn';
+
+}
 
 
 function renderThreeRandomImages(){
@@ -95,13 +114,13 @@ function renderThreeRandomImages(){
         imageOneIndex = generateRandomIndex();
         imageTwoIndex = generateRandomIndex();
         imageThreeIndex = generateRandomIndex();
-    } while(imageOneIndex === imageTwoIndex && imageTwoIndex === imageThreeIndex && imageOneIndex === imageThreeIndex );
+    } while(imageOneIndex === imageTwoIndex || imageTwoIndex === imageThreeIndex || imageOneIndex === imageThreeIndex );
     imageOneElement.src = ImageMall.prototype.allImages[imageOneIndex].imageSource;
     imageTwoElement.src = ImageMall.prototype.allImages[imageTwoIndex].imageSource;
     imageThreeElement.src = ImageMall.prototype.allImages[imageThreeIndex].imageSource;
-    imageAppearence++;
+    
     console.log(imageOneIndex, imageTwoIndex, imageThreeIndex)
-
+    console.log(imageOneIndex)
 
   }
 

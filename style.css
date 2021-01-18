@@ -2,6 +2,7 @@ body
 {
     display: grid;
     grid-template-rows: 0.2fr 2fr 0.3fr;
+    font-family: 'Arial Narrow Bold', sans-serif;
 
 }
 header
@@ -10,12 +11,10 @@ header
     grid-template-columns: 1fr 6fr;
     /* grid-template-rows: auto; */
     padding: 10px;
-    font-family: 'Arial Narrow Bold', sans-serif;
-
     padding: 15px;
     color: #ffffff;
-    background-color: #a31621;
-    bottom: 0;
+    background-color: #041E2A;
+
 }
 
 main
@@ -63,12 +62,54 @@ aside
 
 footer
 {
-    font-family: 'Arial Narrow Bold', sans-serif;
     text-align: center;
     padding: 15px;
     color: #ffffff;
-    background-color: #a31621;
+    background-color:#041E2A;
     bottom: 0;
+}
+h2
+{
+
+    margin-left: 10px;
+
+    font-size: 20px;
 
 
+}
+#myBtn
+{
+    
+    text-align: center;
+    padding: 10px 20px ;
+    color: #ffffff;
+    background-color: #041E2A;
+    border-radius: 5px;
+    border: 0;
+    margin-left: 10px;
+}
+
+#myBtn:active
+{
+    text-align: center;
+    padding: 10px 20px ;
+    color: #ffffff;
+    background-color:#041E2A;
+    border-radius: 5px;
+    border: 0;
+    margin-left: 10px;
+}
+
+#myBtn:hover
+{
+    text-align: center;
+    padding: 10px 20px ;
+    color: #ffffff;
+    background-color: #2C4B59;
+    border-radius: 5px;
+    border: 0;
+    margin-left: 10px;
+}
+li{
+    margin-left: 10px;
 }
