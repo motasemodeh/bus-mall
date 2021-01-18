@@ -11,6 +11,9 @@ var userAttemptsCounter = 0;
 var imageOneIndex;
 var imageTwoIndex;
 var imageThreeIndex;
+var timesImagesHasBeenShown = [];
+var imagesNames = [];
+var subsequentImages = [];
 
 function ImageMall(imageName, imageSource)
 {
@@ -20,6 +23,8 @@ function ImageMall(imageName, imageSource)
     this.timesImagesHasBeenShown = 0;
     this.imageAppearence = 0;
     ImageMall.prototype.allImages.push(this);
+    imagesNames.push(imageName);
+    subsequentImages.push(imageName);
 
 }
 
@@ -66,17 +71,11 @@ function handleUserClick(event){
         ImageMall.prototype.allImages[imageThreeIndex].timesImagesHasBeenShown++;
         renderThreeRandomImages();
     }
-
   } else {
-
     imagesHolderElement.removeEventListener('click',handleUserClick);
-
     buttonElement.disabled=false;
-
   }
-
 }
-
 
 var resultsList;
 var finalResult;
@@ -95,7 +94,11 @@ function showResult()
    
   }
   buttonElement.removeEventListener('click',showResult);
-}
+  for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
+    timesImagesHasBeenShown.push(ImageMall.prototype.allImages[i].timesImagesHasBeenShown);
+  }
+      chart.config.data.datasets[0].data = timesImagesHasBeenShown;
+    }
 
 function renderThreeRandomImages(){
   imageOneIndex = generateRandomIndex();
@@ -112,12 +115,13 @@ function renderThreeRandomImages(){
     imageThreeElement.src = ImageMall.prototype.allImages[imageThreeIndex].imageSource;
     ImageMall.prototype.allImages[imageThreeIndex].imageAppearence++;
     
-    console.log(imageOneIndex, imageTwoIndex, imageThreeIndex)
-    console.log(imageOneIndex)
+    // console.log(imageOneIndex, imageTwoIndex, imageThreeIndex)
+    // console.log(imageOneIndex)
 
   }
 
-  function generateRandomIndex(){
+  function generateRandomIndex()
+  {
     return Math.floor(Math.random() * (ImageMall.prototype.allImages.length));
   }
   
@@ -126,3 +130,44 @@ function renderThreeRandomImages(){
   event.preventDefault();
   maxAttempts = event.target.rounds.value;
 }
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: imagesNames,
+        datasets: [{
+          label: 'Number of Votes',
+
+          backgroundColor: [
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080',
+              '#867979',
+              '#808080'
+          ],
+          borderWidth: 0
+      }]
+  },
+
+});chart.render();
+
+

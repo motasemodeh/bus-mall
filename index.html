@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+
     <title>Document</title>
 </head>
 <body>
@@ -14,7 +15,7 @@
     <main>
         <aside>
             <form id="numberofrounds">
-                <label for="numbers">Number of Rounds</label>
+                <label for="numbers" id="myLabel">Number of Rounds</label>
                 <input type="number" name="rounds" id="rounds">
                 <input type="submit" class="roundsButton" value="Ok">
             </form>
@@ -25,21 +26,29 @@
 
                 <input type="submit" id="show-result-bitton" disabled>
 
-
             </div>
                   </aside>
+
                   <div>
+          
 
         <div id="imageVotes">
             <img id="image-one" src="">
             <img id="image-two" src="">
             <img id="image-three" src="">
         </div>
+
+
+        
         <div>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit et esse accusamus illo. Ut doloremque esse quasi aperiam, maiores est cupiditate, commodi, earum ipsam architecto distinctio rerum veniam id? Eveniet!</p>
-
+            
         </div>
+        <div class="chart-container" >
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
     </div>
 
     </main>
@@ -48,6 +57,7 @@
         © Copyright Bus Mall 2021. All Rights Reserved
     </p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="app.js"></script>
 </body>
 </html>
