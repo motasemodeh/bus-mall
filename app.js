@@ -13,6 +13,7 @@ var imageTwoIndex;
 var imageThreeIndex;
 var timesImagesHasBeenShown = [];
 var imagesNames = [];
+var subsequentImages = [];
 
 function ImageMall(imageName, imageSource)
 {
@@ -23,6 +24,7 @@ function ImageMall(imageName, imageSource)
     this.imageAppearence = 0;
     ImageMall.prototype.allImages.push(this);
     imagesNames.push(imageName);
+    subsequentImages.push(imageName);
 
 }
 
@@ -69,15 +71,10 @@ function handleUserClick(event){
         ImageMall.prototype.allImages[imageThreeIndex].timesImagesHasBeenShown++;
         renderThreeRandomImages();
     }
-
   } else {
-
     imagesHolderElement.removeEventListener('click',handleUserClick);
-
     buttonElement.disabled=false;
-
   }
-
 }
 
 var resultsList;
@@ -118,12 +115,13 @@ function renderThreeRandomImages(){
     imageThreeElement.src = ImageMall.prototype.allImages[imageThreeIndex].imageSource;
     ImageMall.prototype.allImages[imageThreeIndex].imageAppearence++;
     
-    console.log(imageOneIndex, imageTwoIndex, imageThreeIndex)
-    console.log(imageOneIndex)
+    // console.log(imageOneIndex, imageTwoIndex, imageThreeIndex)
+    // console.log(imageOneIndex)
 
   }
 
-  function generateRandomIndex(){
+  function generateRandomIndex()
+  {
     return Math.floor(Math.random() * (ImageMall.prototype.allImages.length));
   }
   
@@ -142,8 +140,8 @@ var chart = new Chart(ctx, {
     data: {
         labels: imagesNames,
         datasets: [{
-          label: '# of Votes',
-          // data: [12, 19, 3, 5, 2, 3],
+          label: 'Number of Votes',
+
           backgroundColor: [
               '#867979',
               '#808080',
@@ -166,18 +164,10 @@ var chart = new Chart(ctx, {
               '#867979',
               '#808080'
           ],
-          borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-          ],
           borderWidth: 0
       }]
   },
 
 });chart.render();
 
-console.log(chart);
+
