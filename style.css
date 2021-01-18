@@ -66,7 +66,7 @@ footer
     padding: 15px;
     color: #ffffff;
     background-color:#041E2A;
-    bottom: 0;
+
 }
 h2
 {
@@ -77,7 +77,7 @@ h2
 
 
 }
-#myBtn
+#show-result-bitton
 {
     
     text-align: center;
@@ -89,7 +89,18 @@ h2
     margin-left: 10px;
 }
 
-#myBtn:active
+.roundsButton
+{
+    text-align: center;
+    padding: 10px 20px ;
+    color: #ffffff;
+    background-color: #041E2A;
+    border-radius: 5px;
+    border: 0;
+    margin-left: 10px;
+}
+
+#show-result-bitton:active
 {
     text-align: center;
     padding: 10px 20px ;
@@ -100,7 +111,7 @@ h2
     margin-left: 10px;
 }
 
-#myBtn:hover
+#show-result-bitton:hover
 {
     text-align: center;
     padding: 10px 20px ;
