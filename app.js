@@ -17,6 +17,7 @@ var previmageOne = -1;
 var previmageTwo = -1;
 var previmageThree = -1;
 
+
 function ImageMall(imageName, imageSource)
 {
 
@@ -74,7 +75,9 @@ function handleUserClick(event){
     }
   } else {
     imagesHolderElement.removeEventListener('click',handleUserClick);
+
     buttonElement.disabled=false;
+
   }
 }
 
@@ -86,7 +89,8 @@ function showResult()
       resultsList = document.getElementById('results-list');
       finalResult;
       
-  buttonElement.removeEventListener('click',showResult);
+  // buttonElement.removeEventListener('click',showResult);
+
   for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
     timesImagesHasBeenVoted.push(ImageMall.prototype.allImages[i].timesImagesHasBeenVoted);
   }
@@ -133,15 +137,17 @@ function renderThreeRandomImages(){
   event.preventDefault();
   maxAttempts = event.target.rounds.value;
 }
-
+var imagesShown = [];
+var votesArray = [];
 function showChartResult(){
-  var imagesShown = [];
-  var votesArray = [];
+  // var imagesShown = [];
+  // var votesArray = [];
   for (var i=0; i < ImageMall.prototype.allImages.length; i++)
   {
     votesArray.push(ImageMall.prototype.allImages[i].timesImagesHasBeenVoted)
     imagesShown.push(ImageMall.prototype.allImages[i].imageAppearence);
   }
+
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -153,19 +159,28 @@ var chart = new Chart(ctx, {
         datasets: [
         {
           label: "Number of Displaying",
-          backgroundColor: "rgb(0, 197, 106)",
+          backgroundColor: "#ab0e1e",
           data: imagesShown,
         },
         {
           label: "Number of Voting",
-          backgroundColor: "rgb(255, 114, 107)",
+          backgroundColor: "#041E2A",
           data: votesArray,
         },]
     
   },  
 
 });
+buttonElement.removeEventListener('click',showChartResult);
+  //get 'animal' and rehydrate it  (convert it back JSON)
+  var votesTrackerFinal = JSON.parse(localStorage.getItem('votesArray'));
 
-myChart.canvas.parentNode.style.width = '60%';
-    myChart.canvas.parentNode.style.height = '400px';
+  //convert JSON animal into a string
+  var votesTracker = JSON.stringify(votesArray);
+
+  //save it with local storage
+  localStorage.setItem('votesArray', votesTracker);
+
+
+  console.log(votesTrackerFinal)
 }
