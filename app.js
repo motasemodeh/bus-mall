@@ -11,7 +11,8 @@ var userAttemptsCounter = 0;
 var imageOneIndex;
 var imageTwoIndex;
 var imageThreeIndex;
-var timesImagesHasBeenShown = [];
+var timesImagesHasBeenVoted = [];
+
 var imagesNames = [];
 var subsequentImages = [];
 var previmageOne = -1;
@@ -23,7 +24,7 @@ function ImageMall(imageName, imageSource)
 
     this.imageName = imageName;
     this.imageSource = imageSource;
-    this.timesImagesHasBeenShown = 0;
+    this.timesImagesHasBeenVoted = 0;
     this.imageAppearence = 0;
     ImageMall.prototype.allImages.push(this);
     imagesNames.push(imageName);
@@ -55,7 +56,7 @@ new ImageMall('Wine Glass','img/wine-glass.jpg');
 renderThreeRandomImages();
 
 imagesHolderElement.addEventListener('click',handleUserClick)
-buttonElement.addEventListener('click',showResult);
+buttonElement.addEventListener('click',showChartResult);
 numberOfRoundsForm.addEventListener('submit',userDefinedroundNumbers);
 imagesNames;
 function handleUserClick(event){
@@ -63,14 +64,14 @@ function handleUserClick(event){
 
   if(userAttemptsCounter < maxAttempts){
     if(event.target.id === 'image-one'){
-        ImageMall.prototype.allImages[imageOneIndex].timesImagesHasBeenShown++;
+        ImageMall.prototype.allImages[imageOneIndex].timesImagesHasBeenVoted++;
         renderThreeRandomImages();
 
     } else if (event.target.id === 'image-two') {
-        ImageMall.prototype.allImages[imageTwoIndex].timesImagesHasBeenShown++;
+        ImageMall.prototype.allImages[imageTwoIndex].timesImagesHasBeenVoted++;
         renderThreeRandomImages();
     }  else if (event.target.id === 'image-three'){
-        ImageMall.prototype.allImages[imageThreeIndex].timesImagesHasBeenShown++;
+        ImageMall.prototype.allImages[imageThreeIndex].timesImagesHasBeenVoted++;
         renderThreeRandomImages();
     }
   } else {
@@ -90,7 +91,7 @@ function showResult()
   for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
 
     // finalResult = document.createElement('li');
-    // finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' had  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenShown + ' Votes, and was seen ' + ImageMall.prototype.allImages[i].imageAppearence + ' Times' + 'and its Persentage was ' + (ImageMall.prototype.allImages[i].timesImagesHasBeenShown * 100 / ImageMall.prototype.allImages[i].imageAppearence) + '%';
+    // finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' had  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenVoted + ' Votes, and was seen ' + ImageMall.prototype.allImages[i].imageAppearence + ' Times' + 'and its Persentage was ' + (ImageMall.prototype.allImages[i].timesImagesHasBeenVoted * 100 / ImageMall.prototype.allImages[i].imageAppearence) + '%';
     
     // resultsList.appendChild(finalResult);
    
@@ -99,9 +100,9 @@ function showResult()
 
   buttonElement.removeEventListener('click',showResult);
   for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
-    timesImagesHasBeenShown.push(ImageMall.prototype.allImages[i].timesImagesHasBeenShown);
+    timesImagesHasBeenVoted.push(ImageMall.prototype.allImages[i].timesImagesHasBeenVoted);
   }
-      chart.config.data.datasets[0].data = timesImagesHasBeenShown;
+      chart.config.data.datasets[0].data = timesImagesHasBeenVoted;
     }
 
 function renderThreeRandomImages(){
@@ -154,11 +155,13 @@ function renderThreeRandomImages(){
 //   showResult();
 //   showChart();
 // }
-
+function showChartResult(){
+  var imagesShown = [];
   var votesArray = [];
   for (var i=0; i < ImageMall.prototype.allImages.length; i++)
   {
-    votesArray.push(ImageMall.prototype.allImages[i].timesImagesHasBeenShown)
+    votesArray.push(ImageMall.prototype.allImages[i].timesImagesHasBeenVoted)
+    imagesShown.push(ImageMall.prototype.allImages[i].imageAppearence);
   }
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
@@ -168,33 +171,17 @@ var chart = new Chart(ctx, {
     // The data for our dataset
     data: {
         labels: imagesNames,
-        datasets: [{
-          label: 'Number of Votes',
-
-          backgroundColor: [
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080',
-              '#867979',
-              '#808080'
-          ],
-          borderWidth: 0
-      }]
+        datasets: [
+        {
+          label: "Number of Displaying",
+          backgroundColor: "rgb(0, 197, 106)",
+          data: imagesShown,
+        },
+        {
+          label: "Number of Voting",
+          backgroundColor: "rgb(255, 114, 107)",
+          data: votesArray,
+        },]
 
       
 
@@ -216,3 +203,4 @@ var chart = new Chart(ctx, {
 
 myChart.canvas.parentNode.style.width = '60%';
     myChart.canvas.parentNode.style.height = '400px';
+}
