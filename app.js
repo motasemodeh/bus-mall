@@ -12,9 +12,7 @@ var imageOneIndex;
 var imageTwoIndex;
 var imageThreeIndex;
 var timesImagesHasBeenVoted = [];
-
 var imagesNames = [];
-var subsequentImages = [];
 var previmageOne = -1;
 var previmageTwo = -1;
 var previmageThree = -1;
@@ -88,16 +86,6 @@ function showResult()
       resultsList = document.getElementById('results-list');
       finalResult;
       
-  for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
-
-    // finalResult = document.createElement('li');
-    // finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' had  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenVoted + ' Votes, and was seen ' + ImageMall.prototype.allImages[i].imageAppearence + ' Times' + 'and its Persentage was ' + (ImageMall.prototype.allImages[i].timesImagesHasBeenVoted * 100 / ImageMall.prototype.allImages[i].imageAppearence) + '%';
-    
-    // resultsList.appendChild(finalResult);
-   
-  }
-
-
   buttonElement.removeEventListener('click',showResult);
   for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
     timesImagesHasBeenVoted.push(ImageMall.prototype.allImages[i].timesImagesHasBeenVoted);
@@ -108,7 +96,6 @@ function showResult()
 function renderThreeRandomImages(){
 
   var forbiddenIndex = [previmageOne,previmageTwo,previmageThree];
-
 
     do {
       imageOneIndex = generateRandomIndex();
@@ -127,17 +114,12 @@ function renderThreeRandomImages(){
     } while (forbiddenIndex.includes(imageThreeIndex));
     previmageThree = imageThreeIndex;
 
-
-
     imageOneElement.src = ImageMall.prototype.allImages[imageOneIndex].imageSource;
     ImageMall.prototype.allImages[imageOneIndex].imageAppearence++;
     imageTwoElement.src = ImageMall.prototype.allImages[imageTwoIndex].imageSource;
     ImageMall.prototype.allImages[imageTwoIndex].imageAppearence++;
     imageThreeElement.src = ImageMall.prototype.allImages[imageThreeIndex].imageSource;
     ImageMall.prototype.allImages[imageThreeIndex].imageAppearence++;
-    
-    // console.log(imageOneIndex, imageTwoIndex, imageThreeIndex)
-    // console.log(imageOneIndex)
 
   }
 
@@ -151,10 +133,7 @@ function renderThreeRandomImages(){
   event.preventDefault();
   maxAttempts = event.target.rounds.value;
 }
-// function displayResults(){
-//   showResult();
-//   showChart();
-// }
+
 function showChartResult(){
   var imagesShown = [];
   var votesArray = [];
@@ -182,22 +161,8 @@ var chart = new Chart(ctx, {
           backgroundColor: "rgb(255, 114, 107)",
           data: votesArray,
         },]
-
-      
-
-  },  scales: {
-    yAxes: [{
-        ticks: {
-            max: 100,
-            min: 0,
-            beginAtZero: 0,
-            stepSize: 5,
-        }
-    }],
-
-}
-
-
+    
+  },  
 
 });
 
