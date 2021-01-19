@@ -14,6 +14,9 @@ var imageThreeIndex;
 var timesImagesHasBeenShown = [];
 var imagesNames = [];
 var subsequentImages = [];
+var previmageOne = -1;
+var previmageTwo = -1;
+var previmageThree = -1;
 
 function ImageMall(imageName, imageSource)
 {
@@ -24,8 +27,7 @@ function ImageMall(imageName, imageSource)
     this.imageAppearence = 0;
     ImageMall.prototype.allImages.push(this);
     imagesNames.push(imageName);
-    subsequentImages.push(imageName);
-
+    
 }
 
 ImageMall.prototype.allImages = [];
@@ -55,7 +57,7 @@ renderThreeRandomImages();
 imagesHolderElement.addEventListener('click',handleUserClick)
 buttonElement.addEventListener('click',showResult);
 numberOfRoundsForm.addEventListener('submit',userDefinedroundNumbers);
-
+imagesNames;
 function handleUserClick(event){
   userAttemptsCounter++;
 
@@ -87,12 +89,14 @@ function showResult()
       
   for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
 
-    finalResult = document.createElement('li');
-    finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' had  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenShown + ' Votes, and was seen ' + ImageMall.prototype.allImages[i].imageAppearence + ' Times' + 'and its Persentage was ' + (ImageMall.prototype.allImages[i].timesImagesHasBeenShown * 100 / ImageMall.prototype.allImages[i].imageAppearence) + '%';
+    // finalResult = document.createElement('li');
+    // finalResult.textContent = ImageMall.prototype.allImages[i].imageName + ' had  '+ ImageMall.prototype.allImages[i].timesImagesHasBeenShown + ' Votes, and was seen ' + ImageMall.prototype.allImages[i].imageAppearence + ' Times' + 'and its Persentage was ' + (ImageMall.prototype.allImages[i].timesImagesHasBeenShown * 100 / ImageMall.prototype.allImages[i].imageAppearence) + '%';
     
-    resultsList.appendChild(finalResult);
+    // resultsList.appendChild(finalResult);
    
   }
+
+
   buttonElement.removeEventListener('click',showResult);
   for(var i = 0; i < ImageMall.prototype.allImages.length; i++){
     timesImagesHasBeenShown.push(ImageMall.prototype.allImages[i].timesImagesHasBeenShown);
@@ -101,13 +105,29 @@ function showResult()
     }
 
 function renderThreeRandomImages(){
-  imageOneIndex = generateRandomIndex();
-  
-    do{
 
-        imageTwoIndex = generateRandomIndex();
-        imageThreeIndex = generateRandomIndex();
-    } while(imageOneIndex === imageTwoIndex || imageTwoIndex === imageThreeIndex || imageOneIndex === imageThreeIndex );
+  var forbiddenIndex = [previmageOne,previmageTwo,previmageThree];
+
+
+    do {
+      imageOneIndex = generateRandomIndex();
+    } while (forbiddenIndex.includes(imageOneIndex));
+    previmageOne = imageOneIndex;
+    forbiddenIndex.push(imageOneIndex);
+  
+    do {
+      imageTwoIndex = generateRandomIndex();
+    } while (forbiddenIndex.includes(imageTwoIndex));
+    previmageTwo = imageTwoIndex;
+    forbiddenIndex.push(imageTwoIndex);
+  
+    do {
+      imageThreeIndex = generateRandomIndex();
+    } while (forbiddenIndex.includes(imageThreeIndex));
+    previmageThree = imageThreeIndex;
+
+
+
     imageOneElement.src = ImageMall.prototype.allImages[imageOneIndex].imageSource;
     ImageMall.prototype.allImages[imageOneIndex].imageAppearence++;
     imageTwoElement.src = ImageMall.prototype.allImages[imageTwoIndex].imageSource;
@@ -130,7 +150,16 @@ function renderThreeRandomImages(){
   event.preventDefault();
   maxAttempts = event.target.rounds.value;
 }
+// function displayResults(){
+//   showResult();
+//   showChart();
+// }
 
+  var votesArray = [];
+  for (var i=0; i < ImageMall.prototype.allImages.length; i++)
+  {
+    votesArray.push(ImageMall.prototype.allImages[i].timesImagesHasBeenShown)
+  }
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -166,8 +195,24 @@ var chart = new Chart(ctx, {
           ],
           borderWidth: 0
       }]
-  },
 
-});chart.render();
+      
+
+  },  scales: {
+    yAxes: [{
+        ticks: {
+            max: 100,
+            min: 0,
+            beginAtZero: 0,
+            stepSize: 5,
+        }
+    }],
+
+}
 
 
+
+});
+
+myChart.canvas.parentNode.style.width = '60%';
+    myChart.canvas.parentNode.style.height = '400px';
