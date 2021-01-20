@@ -16,6 +16,8 @@ var imagesNames = [];
 var previmageOne = -1;
 var previmageTwo = -1;
 var previmageThree = -1;
+var imagesShown = [];
+var votesArray = [];
 
 
 function ImageMall(imageName, imageSource)
@@ -54,8 +56,25 @@ new ImageMall('Wine Glass','img/wine-glass.jpg');
 
 renderThreeRandomImages();
 
+function setData() {
+  var order = JSON.stringify(ImageMall.prototype.allImages);
+  localStorage.setItem('order', order);
+}
+
+function getData() {
+  var list = localStorage.getItem('order');
+  var jsList = JSON.parse(list);
+
+  if(jsList !== null) {
+    ImageMall.prototype.allImages = jsList;
+    order = jsList;
+  }
+  renderThreeRandomImages();
+}
+
 imagesHolderElement.addEventListener('click',handleUserClick)
 buttonElement.addEventListener('click',showChartResult);
+getData();
 numberOfRoundsForm.addEventListener('submit',userDefinedroundNumbers);
 imagesNames;
 function handleUserClick(event){
@@ -79,6 +98,7 @@ function handleUserClick(event){
     buttonElement.disabled=false;
 
   }
+  setData();
 }
 
 var resultsList;
@@ -88,6 +108,7 @@ function showResult()
       // handle end of voting
       resultsList = document.getElementById('results-list');
       finalResult;
+      getData();
       
   // buttonElement.removeEventListener('click',showResult);
 
@@ -95,6 +116,7 @@ function showResult()
     timesImagesHasBeenVoted.push(ImageMall.prototype.allImages[i].timesImagesHasBeenVoted);
   }
       chart.config.data.datasets[0].data = timesImagesHasBeenVoted;
+      getData();
     }
 
 function renderThreeRandomImages(){
@@ -136,14 +158,20 @@ function renderThreeRandomImages(){
 {
   event.preventDefault();
   maxAttempts = event.target.rounds.value;
+
 }
-var imagesShown = [];
-var votesArray = [];
+
+
+
+
+
 function showChartResult(){
   // var imagesShown = [];
   // var votesArray = [];
+  
   for (var i=0; i < ImageMall.prototype.allImages.length; i++)
   {
+
     votesArray.push(ImageMall.prototype.allImages[i].timesImagesHasBeenVoted)
     imagesShown.push(ImageMall.prototype.allImages[i].imageAppearence);
   }
@@ -169,18 +197,11 @@ var chart = new Chart(ctx, {
         },]
     
   },  
-
 });
 buttonElement.removeEventListener('click',showChartResult);
-  //get 'animal' and rehydrate it  (convert it back JSON)
-  var votesTrackerFinal = JSON.parse(localStorage.getItem('votesArray'));
-
-  //convert JSON animal into a string
-  var votesTracker = JSON.stringify(votesArray);
-
-  //save it with local storage
-  localStorage.setItem('votesArray', votesTracker);
-
-
-  console.log(votesTrackerFinal)
+  // //get 'animal' and rehydrate it  (convert it back JSON)
+  // localStorage.setItem('Votes', JSON.stringify(ImageMall.prototype.allImages))
+  // var myVotes = JSON.parse(localStorage.getItem(ImageMall.prototype.allImages));
+  // console.log(myVotes.timesImagesHasBeenVoted)
+  
 }
